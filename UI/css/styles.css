@@ -6,7 +6,7 @@ body h1{
 	overflow: hidden;
 	background-color: black;
 	padding: 20px 10px;
-	
+
 }
 
 .navbar a{
@@ -48,7 +48,7 @@ body h1{
 
 input[type=text],
 input[type=password]{
-	width: 80%;
+	width: 50%;
 	padding: 12px 20px;
 	margin: 8px 0;
 	display: inline-block;
