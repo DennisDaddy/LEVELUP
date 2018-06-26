@@ -37,6 +37,14 @@ body h1{
 	padding: 25px;
 }
 
+.column1{
+	width: 50%;
+}
+
+.column2{
+	width: 50%;
+}
+
 .form{
 	border: 3px solid #f1f1f1;
 	text-align: center;	
@@ -68,4 +76,14 @@ button{
 
 button:hover{
 	opacity: 0.8;
+}
+
+.comment{
+	background-color: grey;
+	width: 20%;
+
+}
+
+.row{
+	display: flex;
 }
