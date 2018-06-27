@@ -7,7 +7,7 @@ class User(object):
 	def all_names(self):
 		name = raw_input("Enter you name:")
 
-		print "Your are %s " %name
+		print "Your are %s you are successfullfy logged in " %name
 
 coolins = User("kimani", "john")
 coolins.all_names()		
