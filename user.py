@@ -1,24 +1,32 @@
 class User(object):
-	def __init__(self, first_name, last_name):
+	"""docstring for User"""
+	def __init__(self, first_name, last_name, password):
 		self.first_name = first_name
 		self.last_name = last_name
+		self.password = password
 		self.full_name = first_name + " " + last_name
 
-	def register(self):
-	    first_name = raw_input("Enter Your First name:")
-	    last_name = raw_input("Enter Your Last name:")
-	    password = raw_input("Enter Your password:")
-	    password_confirmation = raw_input("Confirm your password:")
-	    all_names = first_name + " " + last_name
-	    print "Your are  %s and you are successfullfy registered" %all_names
+class Register(User):
+	def sign_up(self):
+		first_name = raw_input("Enter first_name :")
+		last_name = raw_input("Enter Last Name : ")
+		email = raw_input("Enter Email: ")
+		password = raw_input("Enter password: ")
+		password_confirmation = raw_input("Confirm password: ")
+		fullname = first_name + " " + last_name
 
-	def login(self):
-			name = raw_input("Enter Your User name:")
-			password = raw_input("Enter Your Password:")
+		print("you are %s and you are successfully registered " %fullname)
+class Login(User):
+	def log_in(self):
+		print ("Enter your details below to Login.")
+		name = raw_input("Enter your Name : ")
+		email = raw_input("Enter Email: ")	
+		print("you are %s and you are successfully logged in " %name)
 
-			print "Your name is %s and you are successfullfy logged in " %name
 
 
-coolins = User("kimani", "john")
-coolins.register()
-coolins.login()		
+deno =Register("one", "two", "three")
+deno.sign_up()
+
+deno =Login("one", "two", "three")
+deno.log_in()
