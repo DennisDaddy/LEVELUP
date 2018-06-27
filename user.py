@@ -1,12 +1,13 @@
 class User(object):
-	"""docstring for User"""
-	def __init__(self, arg):
-		super(User, self).__init__()
-		self.arg = arg
+	def __init__(self, first_name, last_name):
+		self.first_name = first_name
+		self.last_name = last_name
+		self.full_name = first_name + " " + last_name
 
-class Register(User):
+	def all_names(self):
+		name = raw_input("Enter you name:")
 
+		print "Your are %s " %name
 
-class Login(User):
-
-						
+coolins = User("kimani", "john")
+coolins.all_names()		
