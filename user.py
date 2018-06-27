@@ -3,10 +3,10 @@ class User(object):
 	def __init__(self, arg):
 		super(User, self).__init__()
 		self.arg = arg
-	
-	def register():
-			pass	
 
-	
-	def login():
-			pass		
+class Register(User):
+
+
+class Login(User):
+
+						
