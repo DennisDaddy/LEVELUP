@@ -4,10 +4,21 @@ class User(object):
 		self.last_name = last_name
 		self.full_name = first_name + " " + last_name
 
-	def all_names(self):
-		name = raw_input("Enter you name:")
+	def register(self):
+	    first_name = raw_input("Enter Your First name:")
+	    last_name = raw_input("Enter Your Last name:")
+	    password = raw_input("Enter Your password:")
+	    password_confirmation = raw_input("Confirm your password:")
+	    all_names = first_name + " " + last_name
+	    print "Your are  %s and you are successfullfy registered" %all_names
 
-		print "Your are %s you are successfullfy logged in " %name
+	def login(self):
+			name = raw_input("Enter Your User name:")
+			password = raw_input("Enter Your Password:")
+
+			print "Your name is %s and you are successfullfy logged in " %name
+
 
 coolins = User("kimani", "john")
-coolins.all_names()		
+coolins.register()
+coolins.login()		
