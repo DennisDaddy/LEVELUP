@@ -10,11 +10,15 @@ def welcome_message():
 
 def register():
     user_enter = input("Enter user name: ")
+    first_name = input("Enter First name: ")
+    last_name = input("Enter last name: ")
+    user_email = input("Enter email address: ")
+
 
     if user_enter in users:
         print("\nLogin name already exist!\n")
     else:
-        createPassw = input("Create new password: ")
+        createPassw = input("Create a new password: ")
         users[user_enter] = createPassw
         print("\nUser successfully created\n")
 
