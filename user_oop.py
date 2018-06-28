@@ -4,7 +4,7 @@ class User(object):
 
 	def __init__(self):
 		self.users = {}
-		self.comment = {}
+		self.comments = {}
 		
 
 		option = input("Press Yes if Registered or No if you have an account to login ? Yes/No? ")
@@ -37,10 +37,14 @@ class User(object):
 		else:
 		    print("\nUser doesn't exists or you have entered wrong password!\n")
 
-	def add_comment(self,content):
-		self.comment[content] = content
-
-		return {"info": "content successfully added"}	    
+	def add_comment(self):
+		comment_title = input("Enter comment title: ")
+		comment_content = input("Enter comment title: ")
+		self.comments[comment_title] = comment_title
+		self.comments[comment_content] = comment_content
+		print("Your comment is successfully created!!")
+		print(comment_title)
+		print(comment_title)
 
 dennis =User()
 dennis.register()
