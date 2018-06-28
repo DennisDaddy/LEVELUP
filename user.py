@@ -1,25 +1,32 @@
-class User(object):
-	"""docstring for User"""
-	def register(self):
-		print ("Welcome to commandline App enter your details below to Register")
-		first_name = input("Enter your first name :")
-		last_name = input("Enter your Last Name : ")
-		user_name = input("Enter your user Name : ")
-		email = input("Enter your Email: ")
-		password = input("Enter your password: ")
-		password_confirmation = input("Confirm password: ")
-		fullname = first_name + " " + last_name
+users = {}
+option = ""
 
-		print("you are %s and you are successfully registered " %fullname)
+def welcome_message():
+    option = input("Press Yes if Registered or No if you have an account to login ? Yes/No? ")
+    if option == "Yes":
+        log_user()
+    elif option == "No":
+        register()
 
-	def login(self):
-		print ("Enter your details below to Login.")
-		user_name = input("Enter your user Name : ")
-		email = input("Enter Email: ")	
-		print("you are %s and you are successfully logged in " %user_name)
+def register():
+    user_enter = input("Enter user name: ")
 
+    if user_enter in users:
+        print("\nLogin name already exist!\n")
+    else:
+        createPassw = input("Create new password: ")
+        users[user_enter] = createPassw
+        print("\nUser successfully created\n")
 
-deno =User()
-deno.register()
-deno.login()
+def log_user():
+    login = input("Enter user name: ")
+    passw = input("Enter password: ")
 
+    if login in users and users[login] == passw:
+        print("\nLogin successful!\n")
+    else:
+        print("\nUser doesn't exist or wrong password!\n")
+
+while option != "q":
+    welcome_message()
+    
