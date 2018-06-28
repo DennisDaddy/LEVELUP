@@ -1,3 +1,5 @@
+import sessions
+
 class User(object):
 	
 
@@ -31,7 +33,8 @@ class User(object):
 			print("\nLogin successfully!\n")
 		else:
 		    print("\nUser doesn't exists or wrong password!\n")
-
+	def comment():
+		    	pass	    
 
 dennis =User()
 dennis.register()
