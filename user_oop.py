@@ -5,7 +5,7 @@ class User(object):
 	def __init__(self):
 		self.users = {}
 		self.comments = {}
-		
+		self.option = ""		
 
 		option = input("Press Yes if Registered or No if you have an account to login ? Yes/No? ")
 
@@ -14,6 +14,10 @@ class User(object):
 
 		elif option == "No":
 		    self.register()
+		else:
+			print("Enter the right value up there to continue ")
+			exit()   
+		 
 	
 	def register(self):
 		user_enter = input("Enter user name: ")
@@ -48,6 +52,7 @@ class User(object):
 		    print(comment_title)
 		else:
 			print("\nLogin first to add comment!\n")
+
 dennis =User()
 dennis.register()
 dennis.log_user()
