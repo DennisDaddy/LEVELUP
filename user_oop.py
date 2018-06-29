@@ -18,7 +18,7 @@ class User(object):
 			print("Enter the right value up there to continue ")
 			exit()   
 		 
-	
+	# method to regiser user
 	def register(self):
 		user_enter = input("Enter user name: ")
 		first_name = input("Enter first name: ")
@@ -32,6 +32,7 @@ class User(object):
 		    self.users[user_enter] = createPassw
 		    print("\n User successfully created enter your details below to login\n")	
 
+    # Method to login user
 	def log_user(self):
 		login = input("Enter user name: ")
 		passw = input("Enter password: ")
@@ -41,6 +42,7 @@ class User(object):
 		else:
 		    print("\nUser doesn't exists or you have entered wrong password!, You can create account down there\n")
 
+    # Method to add comment
 	def add_comment(self):
 		if self.log_user:
 		    comment_title = input("Enter comment title: ")
