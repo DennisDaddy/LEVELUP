@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -10,11 +10,11 @@ def home():
 @app.route('/register')
 
 def register():
-	return 'Register here'
+	return render_template('register.html')
 
 @app.route('/login')
 def login():
-	return 'Login here'
+	return render_template('login.html')
 
 @app.route('/posts/new')
 def add_post():
