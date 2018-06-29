@@ -39,12 +39,12 @@ class User(object):
 		if login in self.users and self.users[login] == passw:
 			print("\nLogin successfully!\n")
 		else:
-		    print("\nUser doesn't exists or you have entered wrong password!\n")
+		    print("\nUser doesn't exists or you have entered wrong password!, You can create account down there\n")
 
 	def add_comment(self):
 		if self.log_user:
 		    comment_title = input("Enter comment title: ")
-		    comment_content = input("Enter comment title: ")
+		    comment_content = input("Enter comment content: ")
 		    self.comments[comment_title] = comment_title
 		    self.comments[comment_content] = comment_content
 		    print("\nYour comment is successfully created!!\n")
@@ -52,6 +52,7 @@ class User(object):
 		    print(comment_title)
 		else:
 			print("\nLogin first to add comment!\n")
+
 
 dennis =User()
 dennis.register()
