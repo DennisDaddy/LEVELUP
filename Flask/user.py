@@ -3,8 +3,9 @@ from flask import Flask, render_template, url_for, session, request
 app = Flask(__name__)
 app.secret_key = "am cool"
 
-users = {}
 
+users = []
+user_info = {}
 @app.route('/welcome')
 def welcome():
 	return  render_template('welcome.html')
@@ -15,10 +16,14 @@ def home():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+	
 	if request.method == 'POST':
-		if request.form['username']:
-
-			return render_template('register.html')
+		user_info['user_id'] = len(users)+1
+		user_info['username'] = request.form.get('username')
+		user_info['email'] = request.form.get('email')
+		user_info['password'] = request.form.get('password')
+		users.append(user_info)
+		return render_template('home.html')		
 	return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
