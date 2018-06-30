@@ -17,6 +17,9 @@
 
 		<input type="submit"  value="Login">
 	</form>
+	{% if error %}
+	 <p><strong>Error:</strong>{{ error }}</p>      
+	{% endif %}
 
 </body>
 </html>

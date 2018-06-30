@@ -1,12 +1,17 @@
 from flask import Flask, render_template, url_for, session, request
 
 app = Flask(__name__)
+app.secret_key = "am cool"
 
 users = {}
 
+@app.route('/welcome')
+def welcome():
+	return  render_template('welcome.html')
+
 @app.route('/')
 def home():
-	return 'Welcom to Flask levelUp Application'
+	return render_template('home.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -20,10 +25,14 @@ def register():
 def login():
 	error = None
 	if request.method == 'POST':
-		if valid_login(request.form['username'],
-			request.form['password']):
-		    return render_template('login.html')
+		if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+			error = 'Invalid credetials. please try again'
+
+		else:
+			session['logged_in'] = True
+			return render_template('/home.html')
 	return render_template('login.html', error=error)
+
 
 @app.route('/posts/new')
 def add_post():
@@ -35,7 +44,10 @@ def add_comment():
 
 @app.route('/logout')
 def logout():
-	pass
+	session.pop('logged_in', None)
+	return render_template('welcome.html')
 
 if __name__ == '__main__':
 	app.run(debug=True)
+
+
