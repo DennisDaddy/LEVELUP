@@ -15,9 +15,11 @@ post_info = {}
 
 @app.route('/welcome')
 def welcome():
-    return  render_template('welcome.html')
+    if not session.get('logged_in'):
+    	return "Login to view this page"	
+    return render_template('welcome.html')    
 
-@app.route('/home')
+@app.route('/')
 def home():
 	return render_template('home.html')
 
@@ -33,7 +35,7 @@ def register():
 		users.append(user_info)
 		# print users in terminal 
 		print(users)
-		return render_template('register.html')
+		return redirect(url_for('login'))
 	return render_template('register.html')
 
 # Login User
@@ -41,6 +43,7 @@ def register():
 def login():
 	error = None
 	if request.method == 'POST':
+		session['logged_in'] = True
 		for user in users:
 		    if user_info['username'] == request.form['username']:
 		        return redirect(url_for('welcome'))
