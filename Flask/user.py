@@ -33,8 +33,6 @@ def register():
 		user_info['email'] = request.form.get('email')
 		user_info['password'] = request.form.get('password')
 		users.append(user_info)
-		# print users in terminal 
-		print(users)
 		return redirect(url_for('login'))
 	return render_template('register.html')
 
@@ -60,8 +58,7 @@ def add_post():
 		post_info['content'] = request.form.get('content')
 		
 		posts.append(post_info)
-		# print posts in terminal 
-		print(posts)
+
 		return render_template('new_post.html')
 	return render_template('new_post.html')
 
@@ -74,10 +71,13 @@ def add_comment():
 		comment_info['content'] = request.form.get('content')
 		
 		comments.append(comment_info)
-		# print comments in terminal 
-		print(comments)
 		return render_template('new_comment.html')
 	return render_template('new_comment.html')
+
+#View Comments
+@app.route('/comments/comments', methods=['GET', 'POST'])
+def view_comments():
+	return render_template('comments.html')	
 
 # Logout user
 @app.route('/logout')
