@@ -15,7 +15,7 @@ post_info = {}
 
 @app.route('/welcome')
 def welcome():
-	return  render_template('welcome.html')
+    return  render_template('welcome.html')
 
 @app.route('/home')
 def home():
