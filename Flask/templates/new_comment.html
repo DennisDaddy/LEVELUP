@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add comment</title>
+</head>
+<body>
+	<h2 align="center">Create comments here</h2>
+
+<form align="center" action="" method="post">
+	<label><b>Comment Title:</b></label><br><br>
+	<input type="text" placeholder="Enter comment title" name="title"><br><br>
+	<label><b>Comment Content:</b></label><br><br>
+	<input type="text" placeholder="Enter comment content" name="content" value="{{request.form.content}}"><br><br>
+	<input type="submit"  value="Comment">
+</form>
+
+</body>
+</html>

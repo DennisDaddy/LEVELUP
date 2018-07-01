@@ -9,6 +9,10 @@ user_info = {}
 
 comments = []
 comment_info = {}
+
+posts = []
+post_info = {}
+
 @app.route('/welcome')
 def welcome():
 	return  render_template('welcome.html')
@@ -45,9 +49,18 @@ def login():
 	return render_template('login.html', error=error)
 
 # Create post
-@app.route('/posts/new')
+@app.route('/posts/new', methods=['GET', 'POST'])
 def add_post():
-	return 'Add new post'
+	if request.method == 'POST':
+		post_info['post_id'] = len(posts)+1
+		post_info['title'] = request.form.get('title')
+		post_info['content'] = request.form.get('content')
+		
+		posts.append(post_info)
+		# print posts in terminal 
+		print(posts)
+		return render_template('new_post.html')
+	return render_template('new_post.html')
 
 # Create comment
 @app.route('/comments/new', methods=['GET','POST'])
@@ -60,8 +73,8 @@ def add_comment():
 		comments.append(comment_info)
 		# print comments in terminal 
 		print(comments)
-		return render_template('comment.html')
-	return render_template('comment.html')
+		return render_template('new_comment.html')
+	return render_template('new_comment.html')
 
 # Logout user
 @app.route('/logout')

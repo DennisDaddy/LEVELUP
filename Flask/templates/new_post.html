@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Post</title>
+</head>
+<body>
+	<h2 align="center">Create new post here</h2>
+
+	<form align="center" action="" method="post">
+	<label><b>Post Title:</b></label><br><br>
+	<input type="text" placeholder="Enter comment title here" name="title"><br><br>
+	<label><b>Post Content:</b></label><br><br>
+	<input type="text" placeholder="Enter your post content here" name="content" value="{{request.form.content}}"><br><br>
+	<input type="submit"  value="Post">
+</form>
+
+</body>
+</html>
