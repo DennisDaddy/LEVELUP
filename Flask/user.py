@@ -6,6 +6,9 @@ app.secret_key = "am cool"
 
 users = []
 user_info = {}
+
+comments = []
+comment_info = {}
 @app.route('/welcome')
 def welcome():
 	return  render_template('welcome.html')
@@ -14,9 +17,8 @@ def welcome():
 def home():
 	return render_template('home.html')
 
+# Register user
 @app.route('/register', methods=['GET', 'POST'])
-
-# Register user function
 def register():
 	
 	if request.method == 'POST':
@@ -30,9 +32,8 @@ def register():
 		return render_template('register.html')
 	return render_template('register.html')
 
+# Login User
 @app.route('/login', methods=['GET', 'POST'])
-
-# Login user function
 def login():
 	error = None
 	if request.method == 'POST':
@@ -43,20 +44,27 @@ def login():
 		        return redirect(url_for('register'))
 	return render_template('login.html', error=error)
 
+# Create post
 @app.route('/posts/new')
-# user add post function 
 def add_post():
 	return 'Add new post'
 
-@app.route('/comments/new')
-
-# user add comment function 
+# Create comment
+@app.route('/comments/new', methods=['GET','POST'])
 def add_comment():
-	return 'Add new comment here'	
+	if request.method == 'POST':
+		comment_info['comment_id'] = len(comments)+1
+		comment_info['title'] = request.form.get('title')
+		comment_info['content'] = request.form.get('content')
+		
+		comments.append(comment_info)
+		# print comments in terminal 
+		print(comments)
+		return render_template('comment.html')
+	return render_template('comment.html')
 
+# Logout user
 @app.route('/logout')
-
-# user logout function 
 def logout():
 	session.pop('logged_in', None)
 	return render_template('home.html')
