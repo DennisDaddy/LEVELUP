@@ -77,6 +77,8 @@ def add_comment():
 #View Comments
 @app.route('/comments/comments', methods=['GET', 'POST'])
 def view_comments():
+	for comment in comments:
+		pass
 	return render_template('comments.html')	
 
 # Logout user
