@@ -15,8 +15,10 @@ class FlaskTestCase(unittest.TestCase):
 			data= dict(username="", pasword=""),
 			follow_redirects=True)
 
-	def test_homepage():
-		response = self.client.get(url_for('home'))
-		self.assertEqual(response.status_code, 200)	
+	def test_login_page_loads(self):
+		tester = app.test_client(self)
+		response = tester.get('/login', content_type='html/text')
+		self.assertTrue(b'Login Here', 200)
+
 if __name__ == '__main__':
 			unittest.main()		
