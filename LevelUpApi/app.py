@@ -3,11 +3,11 @@ from flask import Response
 
 app= Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
 	return "Welcome to home page"
 
-@app.route('/level/api/v1/login', methods=['GET', 'POST'])
+@app.route('/level/api/v1/login', methods=['POST'])
 def login():
 	if request.method == 'POST':
 		data = request.get_json()
@@ -15,7 +15,7 @@ def login():
 		password = data['password']
 		return jsonify({'user_name' : user_name, 'password' : password})
 
-@app.route('/level/api/v1/register', methods=['GET', 'POST'])
+@app.route('/level/api/v1/register', methods=['POST'])
 def register():
 	if request.method == 'POST':
 		data = request.get_json()
@@ -29,7 +29,7 @@ def register():
 			'password' :password})
 
 
-@app.route('/level/api/v1/add_comment', methods=['GET', 'POST'])
+@app.route('/level/api/v1/add_comment', methods=['POST'])
 def add_comment():
 	if request.method == 'POST':
 		data = request.get_json()
