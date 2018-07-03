@@ -6,6 +6,7 @@ app= Flask(__name__)
 @app.route('/', methods=['GET'])
 def home():
 	return "Welcome to home page"
+	return jsonify({'message' : 'Welcome to home page'})
 
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
@@ -35,9 +36,9 @@ def add_comment():
 		data = request.get_json()
 		title = data['title']
 		content = data['content']
-		
-
 		return jsonify({'title' : title, 'content' : content})
+	else:	
+	    return jsonify({'title' : 'comment not created'})	
 
 @app.route('/level/api/v1/view_comment', methods=['GET', 'POST'])
 def view_comment():
