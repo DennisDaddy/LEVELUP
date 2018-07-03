@@ -13,7 +13,7 @@ def login():
 		data = request.get_json()
 		user_name = data['user_name']
 		password = data['password']
-		return jsonify({'first_name' : first_name, 'email' : email, 'password' : password})
+		return jsonify({'user_name' : user_name, 'password' : password})
 
 @app.route('/level/api/v1/register', methods=['GET', 'POST'])
 def register():
