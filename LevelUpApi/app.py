@@ -31,8 +31,13 @@ def register():
 
 @app.route('/level/api/v1/add_comment', methods=['GET', 'POST'])
 def add_comment():
-	comment = request.json['title']
-	return comment
+	if request.method == 'POST':
+		data = request.get_json()
+		title = data['title']
+		content = data['content']
+		
+
+		return jsonify({'title' : title, 'content' : content})
 
 @app.route('/level/api/v1/view_comment', methods=['GET', 'POST'])
 def view_comment():
