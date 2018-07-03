@@ -2,6 +2,12 @@ from flask import Flask, jsonify, request
 from flask import Response
 
 app= Flask(__name__)
+#users = []
+#user_info ={}
+
+comments = [{'title': 'This is one'}, {'title': 'This is one'}]
+users = [{'name': 'John two one'}, {'name': 'kevin omosh four'}]
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -44,14 +50,10 @@ def add_comment():
 def view_comment():
 	return "view comment"
 
-@app.route('/level/api/comments', methods=['GET', 'POST'])
+@app.route('/level/api/comments', methods=['GET'])
 def comments():
-	return "all comments"
-
-@app.route('/level/api/v1/view_details', methods=['GET', 'POST'])
-def view_details():
-	return "User details"
-
+	return jsonify({'comments' : comments})
+	
 
 if __name__ == '__main__':
 		app.run(debug=True)	
