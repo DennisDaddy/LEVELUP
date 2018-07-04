@@ -5,8 +5,8 @@ app= Flask(__name__)
 #users = []
 #user_info ={}
 
-comments = [{'title': 'This is one'}, {'title': 'This is one'}]
-users = [{'name': 'John two one'}, {'name': 'kevin omosh four'}]
+comms = [{'title' : 'this is one', 'content' : 'this is the content'},{'title' : 'this is two', 'content' : 'this is the second content'}]
+users = [{'name': 'John'}, {'name': 'kevin'}]
 
 
 @app.route('/', methods=['GET'])
@@ -46,14 +46,12 @@ def add_comment():
 	else:	
 	    return jsonify({'title' : 'comment not created'})	
 
-@app.route('/level/api/v1/view_comment', methods=['GET', 'POST'])
-def view_comment():
-	return "view comment"
 
-@app.route('/level/api/comments', methods=['GET'])
-def comments():
-	return jsonify({'comments' : comments})
-	
+@app.route('/level/api/v1/user/<string:name>', methods=['GET'])
+def user_details(name):
+	uzer = [user for user in users if user['name']== name]
+	return jsonify({'language' : uzer[0]})
+
 
 if __name__ == '__main__':
-		app.run(debug=True)	
+		app.run(debug=True, port=5000)	
