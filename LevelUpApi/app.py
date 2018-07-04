@@ -1,13 +1,16 @@
 """ Import python modules"""
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 
 app = Flask(__name__)
 #users = []
-#user_info ={}
 
-comms = [{'title' : 'this is one', 'content' : 'this is the content'},
-         {'title' : 'this is two', 'content' : 'this is the second content'}]
-users = [{'name': 'John'}, {'name': 'kevin'}]
+
+comms = [{'id' : 1, 'title' : u'this is one', 'content' : u'this is the content'},
+         {'id' : 2, 'title' : u'this is two', 'content' : u'this is the second content'}]
+users = [{'id' : 1, 'username': 'John', 'email': 'email@username', 'password': 'password',
+ 'password_confirmation': 'password_confirmation'}, {'id' : 1, 'username': 'John', 'email': 'email@username',
+  'password': 'password', 'password_confirmation': 'password_confirmation'}]
+user_info ={}
 
 # Root/Home endpoint
 @app.route('/', methods=['GET'])
@@ -29,31 +32,48 @@ def login():
 @app.route('/level/api/v1/register', methods=['POST'])
 def register():
     """ This is a function for refistering users  """
-    if request.method == 'POST':
-        data = request.get_json()
-        first_name = data['first_name']
-        last_name = data['last_name']
-        user_name = data['user_name']
-        email = data['email']
-        password = data['password']
-    return jsonify({'first_name' : first_name, 'last_name' : last_name,
-        	           'user_name' : user_name, 'email' : email, 'password' :password})
+    if not request.json or not 'username' in request.json:
+        abort(400)
+    user = {
+    'id': users[-1]['id'] + 1,
+    'username' : request.json['username'],
+    'email' : request.json['email'],
+    'password' : request.json['password'],
+    'password_confirmation' : request.json['password_confirmation']
+
+    }
+
+    users.append(user)
+    return jsonify({'user': user})
 
 # Add comment endpoint
 @app.route('/level/api/v1/add_comment', methods=['POST'])
 def add_comment():
     """ This is a function for adding comments"""
-    if request.method == 'POST':
-        data = request.get_json()
-        title = data['title']
-        content = data['content']
-    return jsonify({'title' : title, 'content' : content})
+    if not request.json or not 'title' in request.json:
+    	abort(400)
+    comm = {
+            'id' : comms[-1]['id'] + 1,
+            'title': request.json['title'],
+            'content': request.json['content'],
+    }
+    comms.append(comm)
+    return jsonify({'comm' : comm})
 
 # List comments
 @app.route('/level/api/v1/comments', methods=['GET'])
 def comments():
     """ This is a function listing registering users"""
     return jsonify({'comms' : comms})
+
+# Delete comment
+@app.route('/level/api/v1/comments/<int:comm_id>', methods=['DELETE'])
+def delete_comment(comm_id):
+    comm = [comm for comm in comms if comm['id'] == comm_id]
+    if len(comm) == 0:
+         return jsonify({'message' : "No comment"})
+    comms.remove(comm[0])
+    return jsonify({'result': True})
 
  # User details endpoint
 @app.route('/level/api/v1/account/<string:name>', methods=['GET'])
