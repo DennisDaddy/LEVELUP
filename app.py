@@ -30,6 +30,7 @@ def token_required(f):
             return jsonify({'message' : 'Token is invalid'}), 403
 
         return f(*args, **kwargs)
+    return decorated    
 
 
 # Root/Home endpoint
@@ -62,6 +63,11 @@ def register():
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
     """ This is a function for loggin a user """
+    auth = request.authorization
+    if auth and auth.password == 'password':
+        token = jwt.encode({'user' : auth.username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)})
+    return jsonify({'message': 'Could no verify!'})  
+
     user  = {
      'username' : request.json['username'],
      'password' : request.json['password'],
