@@ -42,9 +42,8 @@ def register():
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
     """ This is a function for loggin a user """
-    for user in users:
-        if 'email' == user['email']:
-           return jsonify({'email' : email})
+    loger = [user for user in users if user['email'] == email]
+    return jsonify({'email' : "You are logged in"})
 # Add comment endpoint
 @app.route('/level/api/v1/add_comment', methods=['POST'])
 def add_comment():
