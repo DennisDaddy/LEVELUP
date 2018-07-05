@@ -1,8 +1,12 @@
 """ Import python modules"""
 from flask import Flask, jsonify, request, abort
+import jwt
+import datetime
 
 app = Flask(__name__)
-#users = []
+
+app.config['SECRET_KEY'] = 'super-user'
+
 
 
 comms = [{'id' : 1, 'title' : u'this is one', 'content' : u'this is the content'},
