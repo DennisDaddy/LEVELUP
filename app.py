@@ -1,6 +1,7 @@
 """ Import python modules"""
 from flask import Flask, jsonify, request, abort
 import jwt
+from functools import wraps
 import datetime
 
 app = Flask(__name__)
@@ -15,6 +16,21 @@ users = [{'id' : 1, 'username': 'John', 'email': 'email@username', 'password': '
  'password_confirmation': 'password_confirmation'}, {'id' : 1, 'username': 'John', 'email': 'email@username',
   'password': 'password', 'password_confirmation': 'password_confirmation'}]
 user_info ={}
+
+#Authentication
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.args.get('token')
+        if not token:
+            return jsonify({'message' : 'Token is missing'}), 403
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+        except:
+            return jsonify({'message' : 'Token is invalid'}), 403
+
+        return f(*args, **kwargs)
+
 
 # Root/Home endpoint
 @app.route('/', methods=['GET'])
@@ -46,7 +62,12 @@ def register():
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
     """ This is a function for loggin a user """
-    loger = [user for user in users if user['email'] == email]
+    user  = {
+     'username' : request.json['username'],
+     'password' : request.json['password'],
+    }
+
+    loger = [user for user in users if user['email'] == 'email']
     return jsonify({'email' : "You are logged in"})
 # Add comment endpoint
 @app.route('/level/api/v1/add_comment', methods=['POST'])
