@@ -10,6 +10,7 @@ comms = [{'id' : 1, 'title' : u'this is one', 'content' : u'this is the content'
 users = [{'id' : 1, 'username': 'John', 'email': 'email@username', 'password': 'password',
  'password_confirmation': 'password_confirmation'}, {'id' : 1, 'username': 'John', 'email': 'email@username',
   'password': 'password', 'password_confirmation': 'password_confirmation'}]
+
 user_info ={}
 
 # Root/Home endpoint
@@ -18,33 +19,29 @@ def home():
     """ This function retuns the home page  """
     return jsonify({'message' : 'Welcome to home page'})
 
-# Register user endpoint
-@app.route('/level/api/v1/register', methods=['POST'])
-def register():
-    """ This is a function for refistering users  """
-    if not request.json or not 'username' in request.json:
-        abort(400)
-    user = {
-    'id': users[-1]['id'] + 1,
-    'username' : request.json['username'],
-    'email' : request.json['email'],
-    'password' : request.json['password'],
-    'password_confirmation' : request.json['password_confirmation']
-
-    }
-
-    users.append(user)
-    if not 'email' in request.json and type(request.json['email']()) != unicode:
-    	abort (400)
-    return jsonify({'user': user})
-
  # Login user endpoint
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
     """ This is a function for loggin a user """
-    for user in users:
-        if 'email' == user['email']:
-           return jsonify({'email' : email})
+    if request.method == 'POST':
+        data = request.get_json()
+        user_name = data['user_name']
+        password = data['password']
+    return jsonify({'user_name' : user_name, 'password' : password})
+
+# Register user endpoint
+@app.route('/level/api/v1/register', methods=['POST'])
+def register():
+    """ This is a function for refistering users  """
+    
+    username = request.json()["username"]
+    email  = request.json()["email"]
+    password = request.json()["password"]
+    password_confirmation = request.json()["password_confirmation"]
+    
+    user_info.update({email:{"username": username, "password": password, "password_confirmation": password_confirmation}})
+    if email in user_info:
+        return jsonify({"message": "successful registered"})
 # Add comment endpoint
 @app.route('/level/api/v1/add_comment', methods=['POST'])
 def add_comment():
@@ -75,11 +72,11 @@ def delete_comment(comm_id):
     return jsonify({'result': True})
 
  # User details endpoint
-@app.route('/level/api/v1/account/<int:user_id>', methods=['GET'])
-def user_details(user_id):
+@app.route('/level/api/v1/account/<string:name>', methods=['GET'])
+def user_details(name):
     """ This is a function fetchs user info """
-    uzer = [user for user in users if user['id'] == user_id]
-    return jsonify({'user' : uzer[0]})
+    uzer = [user for user in users if user['name'] == name]
+    return jsonify({'language' : uzer[0]})
 
 
 if __name__ == '__main__':
