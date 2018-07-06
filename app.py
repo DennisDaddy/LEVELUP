@@ -61,17 +61,18 @@ def register():
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
     """ This is a function for loggin a user """
-    if auth and auth.password == 'password':
-        token = jwt.encode({'user' : auth.username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        return jsonify('token': token)
     username = request.get_json()["username"]
     password = request.get_json()["password"]
     if username in user_info:
         if password == user_info[username]["password"]:
-            return jsonify({"message": "You are successfuly  logged in"})
-    return jsonify({'message': "You are successfuly Registered"})
+            token = jwt.encode({'user' : auth.username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+            return jsonify({"token":token.decode('utf-8')})
+        else:    
+            return jsonify({"message": "Wrong inputs try again"})
+    return jsonify({'message': "You are successfuly logged in"})
 # Add comment endpoint
 @app.route('/level/api/v1/add_comment', methods=['POST'])
+@token_required
 def add_comment():
     """ This is a function for adding comments"""
     if not request.json or not 'title' in request.json:
@@ -86,12 +87,14 @@ def add_comment():
 
 # List comments
 @app.route('/level/api/v1/comments', methods=['GET'])
+@token_required
 def comments():
     """ This is a function listing registering users"""
     return jsonify({'posts' : posts})
 
 # Delete comment
 @app.route('/level/api/v1/comments/<int:post_id>', methods=['DELETE'])
+@token_required
 def delete_comment(post_id):
     """ This is a function for deleting a comment """
     post = [post for post in posts if post['id'] == post_id]
