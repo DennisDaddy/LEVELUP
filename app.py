@@ -61,6 +61,9 @@ def register():
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
     """ This is a function for loggin a user """
+    if auth and auth.password == 'password':
+        token = jwt.encode({'user' : auth.username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        return jsonify('token': token)
     username = request.get_json()["username"]
     password = request.get_json()["password"]
     if username in user_info:
