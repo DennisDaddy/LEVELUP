@@ -1,8 +1,8 @@
 """ Import python modules"""
 from flask import Flask, jsonify, request, abort
 import jwt
-from functools import wraps
 import datetime
+from functools import wraps
 
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ def token_required(f):
             return jsonify({'message' : 'Token is invalid'}), 403
 
         return f(*args, **kwargs)
-    return decorated    
+    return decorated
 
 # Register user endpoint
 @app.route('/level/api/v1/register', methods=['POST'])
