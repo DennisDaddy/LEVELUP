@@ -63,18 +63,20 @@ def register():
 @app.route('/level/api/v1/login', methods=['POST'])
 def login():
     """ This is a function for loggin a user """
-    auth = request.authorization
-    if auth and auth.password == 'password':
-        token = jwt.encode({'user' : auth.username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)})
-    return jsonify({'message': 'Could no verify!'})  
+    auth = request.authorizaion
+
+    if not auth or auth.username or not auth.password:
+        return jsonify('message' : 'could not verify')         
 
     user  = {
      'username' : request.json['username'],
      'password' : request.json['password'],
     }
 
-    loger = [user for user in users if user['email'] == 'email']
-    return jsonify({'email' : "You are logged in"})
+    user = [user for user in users if user['email'] == 'email']
+    return jsonify({'message' : "You are successfuly loged in"})
+    if not user:
+        return jsonify({'message' : "User not found"})
 # Add comment endpoint
 @app.route('/level/api/v1/add_comment', methods=['POST'])
 def add_comment():
