@@ -13,7 +13,4 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
     db.init_app(app)
 
-    @app.route('/')
-    def hello_world():
-        return 'Hello world'
     return app
