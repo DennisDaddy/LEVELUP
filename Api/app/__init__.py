@@ -1,16 +1,20 @@
 """ Third party imports """
-from flask import Flask, request, jsonify, abort
+import json
+from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
+from flask import request, jsonify, abort, make_response
+
 
 """Local imports"""
-from config import app_config
+
+from instance.config import app_config
 
 # create db object
 db = SQLAlchemy()
 
 def create_app(config_name):
     from app.models import Comment
-    app = Flask(__name__, instance_relative_config=True)
+    app = FlaskAPI(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -26,30 +30,13 @@ def create_app(config_name):
                 comment.save()
                 response = jsonify({
                     'id': comment.id,
-                    'tittle': comment.tittle,
-                    'content': comment.content,
-                    'date_created': comment.date_created
+                    'title': comment.title,
+                    'date_created': comment.comment.date_created
                 })
-
                 response.status_code = 201
                 return response
+    
 
-            else:
-                comments = Comment.get_all()
-                result = []
 
-                for comment in comments:
-                    obj = {
-
-                        'id': comment.id,
-                        'tittle': comment.tittle,
-                        'content': comment.content,
-                        'date_created': comment.date_created
-                    }
-
-                    results.append(obj)
-                    response = jsonify(results)
-                    response.status_code= 200
-                    return response
 
     return app
