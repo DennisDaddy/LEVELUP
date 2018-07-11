@@ -20,13 +20,13 @@ class User(db.Model):
     )
    
 
-    def __init__(self, email, password):
+    def __init__(self,first_name, last_name, email, address, password):
         """ Initialize with email and password """
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.username = username
-        self.address = address
+        self.first_name = data.get('first_name')
+        self.last_name = data.get('last_name')
+        self.email = data.get('email')
+        self.username = data.get('username')
+        self.address = data.get('address')
         self.password = Bcrypt().generate_password_hash(password).decode()
     
     def password_is_valid(self, password):
@@ -37,6 +37,8 @@ class User(db.Model):
         """Save the user to the database """
         db.session.add(self)
         db.session.commit()
+
+   
 
 
         
