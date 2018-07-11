@@ -1,5 +1,7 @@
 from app import db
 from flask_bcrypt import Bcrypt
+import jwt
+from datetime import datetime, timedelta
 
 class User(db.Model):
     """ This is a class for users table """
@@ -18,9 +20,13 @@ class User(db.Model):
     )
    
 
-    def __init__(self, username, password):
-        """ Initialize with username and password """
+    def __init__(self, email, password):
+        """ Initialize with email and password """
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
         self.username = username
+        self.address = address
         self.password = Bcrypt().generate_password_hash(password).decode()
     
     def password_is_valid(self, password):
@@ -55,8 +61,37 @@ class Comment(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
-    
+
+    def generate_token(self, user_id):
+        """ Method for generating access token """
+        try:
+            payload ={
+                'exp': datetime.utcnow() + timedelta(minutes=5),
+                'iat': datetime.utcnow(),
+                'sub': user_id
+            }
+
+            jwt_string = jwt.encode(
+                payload,
+                current_app.config.get(SECRET),
+                algorithm='HS256'
+            )
+            return jwt_string
+        except Exception as e:
+            return str(e)
+
     @staticmethod
+    def decode_token(token):
+        """ Method for decoding access token """
+        try:
+            payload = jwt.decode(token, current_app.config.get('SECRET'))
+            return payload['sub']
+        except jwt.ExpiredSignatureError:
+            return "Expired token, please login to get new token"
+        except jwt.InvalidTokenError:
+            return "Invalid token please register or login"
+
+
 
     def get_all(user_id):
         return Comment.query.filter_by(created_by=user_id)

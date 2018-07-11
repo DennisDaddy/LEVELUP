@@ -26,7 +26,7 @@ def create_app(config_name):
 
     @app.route('/comments/new', methods=['POST', 'GET'])
 
-    def comments():
+    def add_comment():
         if request.method == "POST":
             title = str(request.data.get('title', ''))
             if title:
@@ -39,8 +39,8 @@ def create_app(config_name):
                 })
                 response.status_code = 201
                 return response
-    
-
-
+    # import and register authentication blueprint
+    from auth import auth_blueprint
+    app.register_blueprint(auth_blueprint)
 
     return app
