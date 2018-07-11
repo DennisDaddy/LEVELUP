@@ -1,45 +1,31 @@
 import os
 
 class Config(object):
+    """ Parent configuration class """
 
-    """
-    Parent configuration class
-
-    """
     DEBUG = False
     CSRF_ENABLED = True
     SECRET = os.getenv('SECRET')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 class DevelopmentConfig(Config):
-    """
-    Configurations for Development
+    """Configurations for Development"""
 
-    """
     DEBUG = True
 
 class TestingConfig(Config):
+    """Configurations for Testing, with a separate test database"""
 
-    """
-    Configurations for Testing
-
-    """
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:123456@localhost:5432/level_ap'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:123456@localhost:5432/dennis_api'
     DEBUG = True
 
 class StagingConfig(Config):
-
-    """
-    Configurations for Staging
-
-    """
+    """Configurations for Staging"""
     DEBUG = True
 
 class ProductionConfig(Config):
-
     """Configurations for Production"""
-    
     DEBUG = False
     TESTING = False
 
