@@ -24,7 +24,7 @@ def create_app(config_name):
     def index():
         return "welcome to homepage"
 
-    @app.route('/comments/', methods=['POST', 'GET'])
+    @app.route('/comments/new', methods=['POST', 'GET'])
 
     def comments():
         if request.method == "POST":
