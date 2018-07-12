@@ -31,11 +31,11 @@ class CommentTestCase(unittest.TestCase):
         
     def test_comment_deletion(self):
         """ Test comment deletion """
-        rv = self.client().post(
+        tester = self.client().post(
             '/comments/',
             data={'title': 'This is my'}
         )
-        self.assertEqual(rv.status_code, 201)
+        self.assertEqual(tester.status_code, 201)
         res = self.client().delete('/comments/1')
         self.assertEqual(res.status_code, 200)
 
