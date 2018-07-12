@@ -1,5 +1,5 @@
 from app import db
-from flask_bcrypt import Bcrypt
+
 class Comment(db.Model):
     """This class represents the comments table."""
 
