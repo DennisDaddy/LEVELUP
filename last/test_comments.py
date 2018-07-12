@@ -21,7 +21,14 @@ class CommentTestCase(unittest.TestCase):
         tester = self.client().post('/comments/', data=self.comment)
         self.assertEqual(tester.status_code, 201)
         self.assertIn('This is my', str(tester.data))
-    
+    def test_api_can_get_all_comments(self):
+        """ Test api can get all comments """
+        tester = self.client().post('/comments/', data=self.comment)
+        self.assertEqual(tester.status_code, 201)
+        tester = self.client().get('/comments/')
+        self.assertIn('This is my', str(tester.data))
+
+
     def tearDown(self):
         with self.app.app_context():
             # drop all tables
