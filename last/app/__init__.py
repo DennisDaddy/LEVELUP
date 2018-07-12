@@ -16,6 +16,10 @@ def create_app(config_name):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
+    @app.route('/')
+    def index():
+        return ('welcome to homepage')
+
     @app.route('/comments/', methods=['POST', 'GET'])
     def comments():
         if request.method == "POST":
@@ -49,6 +53,19 @@ def create_app(config_name):
             response =jsonify(results)
             response.status_code = 200
             return response
+    @app.route('/comments/<int:id>', methods=['DELETE'])
+    def delete_comment(id, **kwargs):
+        # retrieve comment by id
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            abort(404)
+        if request.method == 'DELETE':
+            comment.delete()
+            return{
+            "message": "comment {} deleted successfully".format(comment.id)
+            }, 200
+
+
 
 
     return app
