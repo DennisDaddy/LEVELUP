@@ -64,6 +64,11 @@ def create_app(config_name):
             return{
             "message": "comment {} deleted successfully".format(comment.id)
             }, 200
+    
+    # Import authentification   blueprint and register on it
+
+    from .auth import auth_blueprint
+    app.register_blueprint(auth_blueprint)
 
 
 
